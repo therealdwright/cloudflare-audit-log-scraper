@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,11 +14,12 @@ import (
 func runCronJobs(apiKey, apiEmail, orgId string, lookBack int) {
 	s := gocron.NewScheduler(time.UTC)
 
-	s.Every(lookBack).Minutes().Do(func() {
+	s.Every(lookBack).Minute().Do(func() {
 		getAuditLogs(apiKey, apiEmail, orgId, lookBack)
 	})
 
 	s.StartBlocking()
+	fmt.Println()
 }
 
 func main() {
@@ -48,8 +50,8 @@ func main() {
 	lookBack = 5
 
 	http.Handle("/metrics", promhttp.Handler())
-	go func() {
-		http.ListenAndServe(":2112", nil)
-	}()
+	//go func() {
+	//	http.ListenAndServe(":2112", nil)
+	//}()
 	runCronJobs(apiKey, apiEmail, orgId, lookBack)
 }
