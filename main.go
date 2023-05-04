@@ -2,10 +2,12 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"time"
 
 	"github.com/go-co-op/gocron"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func runCronJobs(apiKey, apiEmail, orgId string, lookBack int) {
@@ -45,5 +47,9 @@ func main() {
 	}
 	lookBack = 5
 
+	http.Handle("/metrics", promhttp.Handler())
+	go func() {
+		http.ListenAndServe(":2112", nil)
+	}()
 	runCronJobs(apiKey, apiEmail, orgId, lookBack)
 }
