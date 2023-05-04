@@ -11,11 +11,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-func runCronJobs(apiKey, apiEmail, orgId string, lookBack int) {
+func runCronJobs(apiKey, apiEmail, orgId, s3Bucket string, lookBack int) {
 	s := gocron.NewScheduler(time.UTC)
 
 	s.Every(lookBack).Minute().Do(func() {
-		getAuditLogs(apiKey, apiEmail, orgId, lookBack)
+		getAuditLogs(apiKey, apiEmail, orgId, s3Bucket, lookBack)
 	})
 
 	s.StartBlocking()
@@ -27,6 +27,7 @@ func main() {
 	apiKey := os.Getenv("CLOUDFLARE_API_KEY")
 	orgId := os.Getenv("CLOUDFLARE_ORGANIZATION_ID")
 	interval := os.Getenv("CLOUDFLARE_LOOK_BACK_INTERVAL")
+	s3Bucket := os.Getenv("AWS_S3_BUCKET_NAME")
 
 	if apiEmail == "" {
 		log.Fatal("Must specify CLOUDFLARE_API_EMAIL")
@@ -50,8 +51,8 @@ func main() {
 	lookBack = 5
 
 	http.Handle("/metrics", promhttp.Handler())
-	//go func() {
-	//	http.ListenAndServe(":2112", nil)
-	//}()
-	runCronJobs(apiKey, apiEmail, orgId, lookBack)
+	go func() {
+		http.ListenAndServe(":2112", nil)
+	}()
+	runCronJobs(apiKey, apiEmail, orgId, s3Bucket, lookBack)
 }

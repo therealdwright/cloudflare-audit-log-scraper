@@ -30,3 +30,8 @@ deployment has been chosen to ensure that the pod can easily be scheduled across
 * Description: How far back to look back in minutes
 * Default: 5
 * Required: false
+
+`AWS_S3_BUCKET_NAME`
+* Description: A valid S3 bucket name - setting this will write to the bucket instead of local disk
+* Default: null
+* Required: false

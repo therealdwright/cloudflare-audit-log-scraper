@@ -3,6 +3,7 @@ module cloudflare-audit-log-scraper
 go 1.18
 
 require (
+	github.com/aws/aws-sdk-go v1.44.256
 	github.com/cloudflare/cloudflare-go v0.66.0
 	github.com/go-co-op/gocron v1.23.0
 	github.com/prometheus/client_golang v1.15.1
@@ -15,6 +16,7 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
