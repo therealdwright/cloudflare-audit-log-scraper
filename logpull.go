@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/cloudflare/cloudflare-go"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
 const fileName = "lastProcessed.txt"
@@ -28,7 +30,7 @@ func getLastProcessedTime() time.Time {
 	if err == nil && len(fileContents) > 0 {
 		lastProcessedTime, err = time.Parse(time.RFC3339, string(fileContents))
 		if err != nil {
-			log.Fatalf("Error parsing last processed time: %v", err)
+			log.Fatalf("error parsing last processed time: %v", err)
 		}
 		if lastProcessedTime.Before(currentTime.Add(-maxLookBack * time.Hour)) {
 			lastProcessedTime = currentTime.Add(-maxLookBack * time.Hour)
@@ -44,22 +46,29 @@ func getLastProcessedTime() time.Time {
 func storeLastProcessedTimeToDisk(lastProcessedTime time.Time) error {
 	file, err := os.Create(fileName)
 	if err != nil {
-		return fmt.Errorf("Error creating file: %v", err)
+		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer file.Close()
 
 	_, err = file.WriteString(lastProcessedTime.Format(time.RFC3339))
 	if err != nil {
-		return fmt.Errorf("Error writing to file: %v", err)
+		return fmt.Errorf("error writing to file: %v", err)
 	}
 	return nil
 }
+
+var (
+	logsProcessed = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "cloudflare_audit_logs_processed_total",
+		Help: "The total number of processed events",
+	})
+)
 
 // Get audit logs and process them until no more records are returned
 func getAuditLogs(apiKey, apiEmail, orgId string, lookBack int) error {
 	api, err := cloudflare.New(apiKey, apiEmail)
 	if err != nil {
-		return fmt.Errorf("Error creating Cloudflare API client: %v", err)
+		return fmt.Errorf("error creating Cloudflare API client: %v", err)
 	}
 
 	// Get current time minus look back and store in RFC3339
@@ -71,7 +80,7 @@ func getAuditLogs(apiKey, apiEmail, orgId string, lookBack int) error {
 		filterOpts := cloudflare.AuditLogFilter{Since: searchUntil.Format(time.RFC3339), Page: pageNumber}
 		results, err := api.GetOrganizationAuditLogs(context.Background(), orgId, filterOpts)
 		if err != nil {
-			return fmt.Errorf("Error getting audit logs: %v", err)
+			return fmt.Errorf("error getting audit logs: %v", err)
 		}
 
 		if len(results.Result) == 0 {
@@ -80,12 +89,13 @@ func getAuditLogs(apiKey, apiEmail, orgId string, lookBack int) error {
 
 		for _, record := range results.Result {
 			b, _ := json.Marshal(record)
+			logsProcessed.Inc()
 			fmt.Println(string(b))
 		}
 		pageNumber++
 	}
 	if err := storeLastProcessedTimeToDisk(time.Now()); err != nil {
-		return fmt.Errorf("Error storing last processed time to disk: %v", err)
+		return fmt.Errorf("error storing last processed time to disk: %v", err)
 	}
 	return nil
 }

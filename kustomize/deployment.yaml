@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-audit-log-scraper
+  labels:
+    app.kubernetes.io/name: cloudflare-audit-log-scraper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloudflare-audit-log-scraper
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloudflare-audit-log-scraper
+    spec:
+      containers:
+        - name: cloudflare-audit-log-scraper
+          image: quay.io/therealdwright/cloudflare-audit-log-scraper
+          env:
+            - name: CLOUDFLARE_API_EMAIL
+              value: blah
+            - name: CLOUDFLARE_ORGANIZATION_ID
+              value: blah
+            - name: CLOUDFLARE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-audit-log-scraper
+                  key: apiToken
+          ports:
+            - name: metrics
+              containerPort: 2112
