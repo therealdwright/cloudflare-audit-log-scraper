@@ -1,0 +1,202 @@
+{
+  "result": [
+    {
+      "action": {
+        "result": true,
+        "type": "rec_del"
+      },
+      "actor": {
+        "email": "user@example.com",
+        "id": "b41d0c74a32f3a3c0895891002df071f",
+        "ip": "1.1.1.1",
+        "type": "user"
+      },
+      "id": "c22e95b0-73bb-4800-9016-2b8777073368",
+      "interface": "API",
+      "metadata": {
+        "zone_name": "example-domain.com"
+      },
+      "newValue": "",
+      "oldValue": "",
+      "oldValueJson": {
+        "comment": null,
+        "content": "\"heritage=external-dns,external-dns/owner=development",
+        "id": "c527b10dc157a55e18672939a6db007f",
+        "name": "_owner.cname-api-premium.example-domain.com",
+        "proxied": false,
+        "tags": [],
+        "ttl": 1,
+        "type": "TXT",
+        "zone_id": "6feae634df022f9eafaa37d357eed34a",
+        "zone_name": "example-domain.com"
+      },
+      "owner": {
+        "id": "76d6bb40ab3c97a9793aad4afc4758d1"
+      },
+      "resource": {
+        "id": "19812878454",
+        "type": "DNS_record"
+      },
+      "when": "2023-05-02T05:43:14.2409Z"
+    },
+    {
+      "action": {
+        "result": true,
+        "type": "rec_del"
+      },
+      "actor": {
+        "email": "user@example.com",
+        "id": "b41d0c74a32f3a3c0895891002df071f",
+        "ip": "1.1.1.1",
+        "type": "user"
+      },
+      "id": "f0f971f2-ba9b-4703-8d10-a03f6df5a3db",
+      "interface": "API",
+      "metadata": {
+        "zone_name": "example-domain.com"
+      },
+      "newValue": "",
+      "oldValue": "",
+      "oldValueJson": {
+        "comment": null,
+        "content": "\"heritage=external-dns,external-dns/owner=development",
+        "id": "cf16d314ae5fbd269e20fe23fd26eba5",
+        "name": "_owner.api-premium.example-domain.com",
+        "proxied": false,
+        "tags": [],
+        "ttl": 1,
+        "type": "TXT",
+        "zone_id": "6feae634df022f9eafaa37d357eed34a",
+        "zone_name": "example-domain.com"
+      },
+      "owner": {
+        "id": "76d6bb40ab3c97a9793aad4afc4758d1"
+      },
+      "resource": {
+        "id": "19812878431",
+        "type": "DNS_record"
+      },
+      "when": "2023-05-02T05:43:13.985723Z"
+    },
+    {
+      "action": {
+        "result": true,
+        "type": "rec_del"
+      },
+      "actor": {
+        "email": "user@example.com",
+        "id": "b41d0c74a32f3a3c0895891002df071f",
+        "ip": "1.1.1.1",
+        "type": "user"
+      },
+      "id": "3c7e30c3-f280-4b36-a820-01128d093211",
+      "interface": "API",
+      "metadata": {
+        "zone_name": "example-domain.com"
+      },
+      "newValue": "",
+      "oldValue": "",
+      "oldValueJson": {
+        "comment": null,
+        "content": "\"heritage=external-dns,external-dns/owner=development",
+        "id": "0a21d6da7c28c8d25bbd15ae1fdb7435",
+        "name": "_owner.cname-app.example-domain.com",
+        "proxied": false,
+        "tags": [],
+        "ttl": 1,
+        "type": "TXT",
+        "zone_id": "6feae634df022f9eafaa37d357eed34a",
+        "zone_name": "example-domain.com"
+      },
+      "owner": {
+        "id": "76d6bb40ab3c97a9793aad4afc4758d1"
+      },
+      "resource": {
+        "id": "19812840931",
+        "type": "DNS_record"
+      },
+      "when": "2023-05-02T05:43:13.749499Z"
+    },
+    {
+      "action": {
+        "result": true,
+        "type": "rec_del"
+      },
+      "actor": {
+        "email": "user@example.com",
+        "id": "b41d0c74a32f3a3c0895891002df071f",
+        "ip": "1.1.1.1",
+        "type": "user"
+      },
+      "id": "599e4198-8913-405b-aae1-4940139e6427",
+      "interface": "API",
+      "metadata": {
+        "zone_name": "example-domain.com"
+      },
+      "newValue": "",
+      "oldValue": "",
+      "oldValueJson": {
+        "comment": null,
+        "content": "\"heritage=external-dns,external-dns/owner=development",
+        "id": "2a7b666d83ff8637b8987f0fccdf62c1",
+        "name": "_owner.app.example-domain.com",
+        "proxied": false,
+        "tags": [],
+        "ttl": 1,
+        "type": "TXT",
+        "zone_id": "6feae634df022f9eafaa37d357eed34a",
+        "zone_name": "example-domain.com"
+      },
+      "owner": {
+        "id": "76d6bb40ab3c97a9793aad4afc4758d1"
+      },
+      "resource": {
+        "id": "19812840911",
+        "type": "DNS_record"
+      },
+      "when": "2023-05-02T05:43:13.488848Z"
+    },
+    {
+      "action": {
+        "result": true,
+        "type": "rec_del"
+      },
+      "actor": {
+        "email": "user@example.com",
+        "id": "b41d0c74a32f3a3c0895891002df071f",
+        "ip": "1.1.1.1",
+        "type": "user"
+      },
+      "id": "ca317635-676d-413c-911c-5b999f8d1eb1",
+      "interface": "API",
+      "metadata": {
+        "zone_name": "example-domain.com"
+      },
+      "newValue": "",
+      "oldValue": "",
+      "oldValueJson": {
+        "comment": null,
+        "content": "\"heritage=external-dns,external-dns/owner=development",
+        "id": "41721db729dd0432dc0499cd98bbc389",
+        "name": "_owner.cname-internal.example-domain.com",
+        "proxied": false,
+        "tags": [],
+        "ttl": 1,
+        "type": "TXT",
+        "zone_id": "6feae634df022f9eafaa37d357eed34a",
+        "zone_name": "example-domain.com"
+      },
+      "owner": {
+        "id": "76d6bb40ab3c97a9793aad4afc4758d1"
+      },
+      "resource": {
+        "id": "19812840871",
+        "type": "DNS_record"
+      },
+      "when": "2023-05-02T05:43:13.246207Z"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
