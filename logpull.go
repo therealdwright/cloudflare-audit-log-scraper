@@ -70,29 +70,36 @@ func getAuditLogs(apiKey, apiEmail, orgId string, lookBack int) error {
 	if err != nil {
 		return fmt.Errorf("error creating Cloudflare API client: %v", err)
 	}
+	ctx := context.Background()
+	userDetails, err := api.UserDetails(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// Get current time minus look back and store in RFC3339
-	searchUntil := getLastProcessedTime()
+	if len(userDetails.Email) > 0 {
+		// Get current time minus look back and store in RFC3339
+		searchUntil := getLastProcessedTime()
 
-	// audit logs are returned in pages, we must continue to process until we run out of results
-	pageNumber := 1
-	for {
-		filterOpts := cloudflare.AuditLogFilter{Since: searchUntil.Format(time.RFC3339), Page: pageNumber}
-		results, err := api.GetOrganizationAuditLogs(context.Background(), orgId, filterOpts)
-		if err != nil {
-			return fmt.Errorf("error getting audit logs: %v", err)
+		// audit logs are returned in pages, we must continue to process until we run out of results
+		pageNumber := 1
+		for {
+			filterOpts := cloudflare.AuditLogFilter{Since: searchUntil.Format(time.RFC3339), Page: pageNumber}
+			results, err := api.GetOrganizationAuditLogs(context.Background(), orgId, filterOpts)
+			if err != nil {
+				return fmt.Errorf("error getting audit logs: %v", err)
+			}
+
+			if len(results.Result) == 0 {
+				break
+			}
+
+			for _, record := range results.Result {
+				b, _ := json.Marshal(record)
+				logsProcessed.Inc()
+				fmt.Println(string(b))
+			}
+			pageNumber++
 		}
-
-		if len(results.Result) == 0 {
-			break
-		}
-
-		for _, record := range results.Result {
-			b, _ := json.Marshal(record)
-			logsProcessed.Inc()
-			fmt.Println(string(b))
-		}
-		pageNumber++
 	}
 	if err := storeLastProcessedTimeToDisk(time.Now()); err != nil {
 		return fmt.Errorf("error storing last processed time to disk: %v", err)
