@@ -1,5 +1,5 @@
 # Stage 1: build the Go project
-FROM golang:1.20.4 AS build
+FROM golang:1.24 AS build
 
 WORKDIR /app
 
